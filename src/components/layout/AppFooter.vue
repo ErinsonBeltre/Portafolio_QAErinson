@@ -11,12 +11,12 @@
       </div>
       <div class="footer-links">
         <a
-          v-for="link in socialLinks"
+          v-for="link in contactLinks"
           :key="link.id"
-          :href="link.url"
+          :href="link.href"
           :aria-label="link.label"
-          target="_blank"
-          rel="noopener noreferrer"
+          :target="link.id === 'email' ? undefined : '_blank'"
+          :rel="link.id === 'email' ? undefined : 'noopener noreferrer'"
         >
           <i :class="link.icon" aria-hidden="true"></i>
         </a>
@@ -28,15 +28,10 @@
 <script setup>
 import { computed } from 'vue'
 import { personalData } from '@/data/personal.js'
+import { contactLinks } from '@/data/contacts.js'
 
 const personal = personalData
 const currentYear = computed(() => new Date().getFullYear())
-
-const socialLinks = [
-  { id: 'email', icon: 'fa-solid fa-envelope', label: 'Email', url: `mailto:${personal.email}` },
-  { id: 'linkedin', icon: 'fa-brands fa-linkedin', label: 'LinkedIn', url: `https://${personal.linkedin}` },
-  { id: 'github', icon: 'fa-brands fa-github', label: 'GitHub', url: `https://${personal.github}` }
-]
 </script>
 
 <style scoped>
@@ -82,6 +77,12 @@ const socialLinks = [
   25% { transform: scale(1.2); }
   50% { transform: scale(1); }
   75% { transform: scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-heart {
+    animation: none;
+  }
 }
 
 .footer-links {

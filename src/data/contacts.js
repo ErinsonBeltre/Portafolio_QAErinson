@@ -1,5 +1,9 @@
 import { personalData } from './personal.js'
 
+function displayUrl(url) {
+  return url.replace(/^https?:\/\//i, '').replace(/\/$/, '')
+}
+
 export const contactLinks = [
   {
     id: 'email',
@@ -12,14 +16,14 @@ export const contactLinks = [
     id: 'linkedin',
     icon: 'fa-brands fa-linkedin',
     label: 'LinkedIn',
-    value: personalData.linkedin,
-    href: `https://${personalData.linkedin}`
+    value: displayUrl(personalData.linkedin),
+    href: personalData.linkedin
   },
   {
     id: 'github',
     icon: 'fa-brands fa-github',
     label: 'GitHub',
-    value: personalData.github,
-    href: `https://${personalData.github}`
+    value: displayUrl(personalData.github),
+    href: personalData.github
   }
 ]

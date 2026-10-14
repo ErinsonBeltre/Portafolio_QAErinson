@@ -2,15 +2,16 @@
   <section class="hero" id="hero">
     <div class="hero-container">
       <div class="hero-text">
-        <div class="hero-badge">
+        <div v-if="personal.availability" class="hero-badge">
           <span class="dot" aria-hidden="true"></span>
           <span>{{ personal.availabilityText }}</span>
         </div>
 
-        <h1>
-          {{ personal.role }} <br />
+        <h1>{{ personal.name }}</h1>
+        <p class="hero-role">
+          {{ personal.role }}
           <span class="highlight">{{ personal.subtitle }}</span>
-        </h1>
+        </p>
 
         <p class="hero-subtitle">{{ personal.description }}</p>
 
@@ -29,6 +30,7 @@
             variant="primary"
           />
           <BaseButton
+            v-if="cvAvailable"
             text="Descargar CV"
             icon="fa-solid fa-download"
             variant="outline"
@@ -40,11 +42,13 @@
       <div class="hero-image">
         <div class="avatar-container">
           <img
+            v-if="showAvatar"
             :src="personal.avatar"
             :alt="`${personal.name} - QA Engineer`"
             loading="eager"
             @error="handleImageError"
           />
+          <span v-else class="avatar-initials" aria-hidden="true">EB</span>
         </div>
       </div>
     </div>
@@ -52,16 +56,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import { personalData } from '@/data/personal.js'
 import { useDownloadCV } from '@/composables/useDownloadCV.js'
 
 const personal = ref(personalData)
-const { downloadCV } = useDownloadCV()
+const { downloadCV, cvAvailable } = useDownloadCV()
+const imageFailed = ref(false)
 
-const handleImageError = (event) => {
-  event.target.style.display = 'none'
+const showAvatar = computed(() => Boolean(personal.value.avatar) && !imageFailed.value)
+
+const handleImageError = () => {
+  imageFailed.value = true
 }
 </script>
 
@@ -147,6 +154,17 @@ const handleImageError = (event) => {
 
 .highlight { color: var(--color-primary); }
 
+.hero-role {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: var(--spacing-sm);
+}
+
+.hero-role .highlight {
+  display: block;
+}
+
 .hero-subtitle {
   font-size: var(--font-size-lg);
   color: var(--color-gray);
@@ -204,6 +222,15 @@ const handleImageError = (event) => {
   object-fit: cover;
 }
 
+.avatar-initials {
+  color: var(--color-white);
+  font-size: 6rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  user-select: none;
+}
+
 @media (max-width: 900px) {
   .hero-container {
     flex-direction: column-reverse;
@@ -220,6 +247,16 @@ const handleImageError = (event) => {
   .avatar-container {
     width: 200px;
     height: 200px;
+  }
+
+  .avatar-initials {
+    font-size: 4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    animation: none;
   }
 }
 </style>

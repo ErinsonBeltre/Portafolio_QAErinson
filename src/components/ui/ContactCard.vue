@@ -62,5 +62,6 @@ useScrollReveal(cardRef)
 .contact-card span {
   font-size: 0.9rem;
   color: var(--color-gray);
+  overflow-wrap: anywhere;
 }
 </style>

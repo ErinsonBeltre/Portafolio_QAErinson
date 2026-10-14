@@ -21,9 +21,9 @@
       </div>
     </div>
 
-    <div class="project-footer">
+    <div v-if="realLinks.length" class="project-footer">
       <BaseButton
-        v-for="(link, index) in project.links"
+        v-for="(link, index) in realLinks"
         :key="index"
         :text="link.text"
         :href="link.url"
@@ -36,16 +36,20 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import { useScrollReveal } from '@/composables/useScrollReveal'
 
-defineProps({
+const props = defineProps({
   project: {
     type: Object,
     required: true
   }
 })
+
+const realLinks = computed(() =>
+  (props.project.links ?? []).filter((link) => link.url && link.url !== '#')
+)
 
 const cardRef = ref(null)
 useScrollReveal(cardRef)

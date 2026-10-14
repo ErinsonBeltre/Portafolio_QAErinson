@@ -11,7 +11,7 @@ export const skills = [
       title: 'Automatización',
       icon: 'fa-solid fa-robot',
       description: 'Desarrollo de scripts para regresión y humo con frameworks modernos.',
-      tags: ['Cypress'] //, 'Playwright']
+      tags: ['Cypress']
     },
     {
       id: 'languages',
@@ -27,18 +27,11 @@ export const skills = [
       description: 'Pruebas de integración, validación de contratos y endpoints REST.',
       tags: ['Postman', 'Swagger']
     },
-    /* {
-      id: 'performance',
-      title: 'Performance',
-      icon: 'fa-solid fa-gauge-high',
-      description: 'Pruebas de carga básicas y análisis de rendimiento frontend.',
-      tags: ['JMeter', 'Lighthouse']
-    }, */
     {
       id: 'mobile',
       title: 'Mobile Testing',
       icon: 'fa-solid fa-mobile-screen',
       description: 'Pruebas en iOS y Android, emuladores y dispositivos reales.',
-      tags: ['ADB'] //'Appium', 'BrowserStack']
+      tags: ['ADB']
     }
   ]

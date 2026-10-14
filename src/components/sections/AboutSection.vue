@@ -7,7 +7,7 @@
     />
     <div ref="contentRef" class="about-content fade-in">
       <p>
-        Soy un joven <strong>ingenerio en sistemas</strong> con pasión por el desarrollo del software,
+        Soy un joven <strong>ingeniero en sistemas</strong> con pasión por el desarrollo del software,
         la calidad y la innovación tecnológica. Me enfoco en garantizar la funcionalidad,
         usabilidad y rendimiento de aplicaciones web y móviles mediante pruebas funcionales,
         manuales y automatizadas. Me apasiona encontrar bugs antes que los usuarios, diseñar

@@ -1,15 +1,15 @@
 <template>
-  <section class="section" id="certifications">
+  <section class="section" id="contact">
     <SectionHeader
-      tag="Formación"
-      title="Certificaciones & Estudios"
-      subtitle="Aprendizaje continuo y validación de conocimientos"
+      tag="Contacto"
+      title="¿Hablamos?"
+      subtitle="Escríbeme si quieres revisar un producto o sumar QA a tu equipo"
     />
-    <div class="certs-grid">
-      <CertificationCard
-        v-for="cert in certifications"
-        :key="cert.id"
-        :certification="cert"
+    <div class="contact-grid">
+      <ContactCard
+        v-for="link in contactLinks"
+        :key="link.id"
+        :link="link"
       />
     </div>
   </section>
@@ -17,21 +17,21 @@
 
 <script setup>
 import SectionHeader from '@/components/ui/SectionHeader.vue'
-import CertificationCard from '@/components/ui/CertificationCard.vue'
-import { certifications } from '@/data/certifications.js'
+import ContactCard from '@/components/ui/ContactCard.vue'
+import { contactLinks } from '@/data/contacts.js'
 </script>
 
 <style scoped>
-.certs-grid {
+.contact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: var(--spacing-lg);
   max-width: 1000px;
   margin: 0 auto;
 }
 
 @media (max-width: 900px) {
-  .certs-grid {
+  .contact-grid {
     grid-template-columns: 1fr;
   }
 }

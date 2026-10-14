@@ -51,6 +51,20 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    body.nav-menu-open {
+      overflow: hidden;
+    }
+  }
   
   .btn {
     padding: 0.85rem 2rem;

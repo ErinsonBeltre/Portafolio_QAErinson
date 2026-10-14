@@ -7,10 +7,11 @@
       </a>
 
       <button
+        ref="hamburgerRef"
         :class="['hamburger', { active: isMobileMenuOpen }]"
         @click="toggleMobileMenu"
         :aria-expanded="isMobileMenuOpen"
-        aria-label="Abrir menú de navegación"
+        :aria-label="isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'"
         aria-controls="navLinks"
       >
         <span></span>
@@ -20,14 +21,13 @@
 
       <ul
         id="navLinks"
+        ref="navLinksRef"
         :class="['nav-links', { active: isMobileMenuOpen }]"
-        role="menubar"
       >
-        <li v-for="item in navItems" :key="item.id" role="none">
+        <li v-for="item in navItems" :key="item.id">
           <a
             :href="item.href"
             :class="{ 'btn-contacto': item.isCTA }"
-            role="menuitem"
             @click="closeMobileMenu"
           >
             {{ item.label }}
@@ -39,11 +39,63 @@
 </template>
 
 <script setup>
+import { ref, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { useNavbar } from '@/composables/useNavbar.js'
 import { personalData } from '@/data/personal.js'
 
 const personal = personalData
 const { isScrolled, isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } = useNavbar()
+const hamburgerRef = ref(null)
+const navLinksRef = ref(null)
+
+const isMobileViewport = () => window.innerWidth <= 900
+
+const getMenuFocusable = () => {
+  const items = []
+  if (hamburgerRef.value) items.push(hamburgerRef.value)
+  if (navLinksRef.value) {
+    items.push(...navLinksRef.value.querySelectorAll('a[href]'))
+  }
+  return items
+}
+
+const trapMenuFocus = (event) => {
+  if (event.key !== 'Tab' || !isMobileMenuOpen.value || !isMobileViewport()) return
+
+  const focusable = getMenuFocusable()
+  if (!focusable.length) return
+
+  const first = focusable[0]
+  const last = focusable[focusable.length - 1]
+  const active = document.activeElement
+
+  if (!focusable.includes(active)) {
+    event.preventDefault()
+    ;(event.shiftKey ? last : first).focus({ preventScroll: true })
+    return
+  }
+
+  if (event.shiftKey && active === first) {
+    event.preventDefault()
+    last.focus({ preventScroll: true })
+  } else if (!event.shiftKey && active === last) {
+    event.preventDefault()
+    first.focus({ preventScroll: true })
+  }
+}
+
+watch(isMobileMenuOpen, (open) => {
+  if (open || !isMobileViewport()) return
+  nextTick(() => hamburgerRef.value?.focus({ preventScroll: true }))
+})
+
+onMounted(() => {
+  document.addEventListener('keydown', trapMenuFocus)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', trapMenuFocus)
+})
 
 const navItems = [
   { id: 'about', label: 'Sobre mí', href: '#about', isCTA: false },

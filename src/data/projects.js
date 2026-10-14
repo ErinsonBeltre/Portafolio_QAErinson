@@ -15,10 +15,7 @@ export const projects = [
         { number: '45', label: 'Bugs reportados' },
         { number: '-40%', label: 'Tiempo testing' }
       ],
-      links: [
-        { text: 'Repositorio', url: '#', icon: 'fa-brands fa-github', type: 'dark' },
-        { text: 'Plan de pruebas', url: '#', icon: 'fa-solid fa-file-lines', type: 'outline' }
-      ]
+      links: []
     },
     {
       id: 'Forcesos',
@@ -36,9 +33,7 @@ export const projects = [
         { number: '30', label: 'Bugs reportados' },
         { number: 'v2.1', label: 'Versión testeada' }
       ],
-      links: [
-        { text: 'Reporte de bugs', url: '#', icon: 'fa-solid fa-file-lines', type: 'outline' }
-      ]
+      links: []
     },
     {
       id: 'petstore',
@@ -56,9 +51,6 @@ export const projects = [
         { number: '100%', label: 'Cobertura endpoints' },
         { number: 'CI/CD', label: 'Integración' }
       ],
-      links: [
-        { text: 'Colección Postman', url: '#', icon: 'fa-brands fa-github', type: 'dark' },
-        { text: 'Reporte', url: '#', icon: 'fa-solid fa-chart-line', type: 'outline' }
-      ]
+      links: []
     }
   ]
